@@ -99,6 +99,7 @@
       thisCart.dom.wrapper = element;
 
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = element.querySelector(select.cart.productList); // ??? dla czego element.querySelector, nie mozemy thisCart.dom.wrapper ?
     }
 
     initActions(){
@@ -110,9 +111,14 @@
     }
 
     add(menuProduct){
-      // const thisCart = this;
-
-      console.log('adding product: ', menuProduct);
+      const thisCart = this;
+      /* generate HTML based on template */
+      const generatedHTML = templates.cartProduct(menuProduct); // ??? menuProduct
+      /* create element using utils.createElementFromHTML */
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+      /* add to productList using appendChild */  
+      thisCart.dom.productList.appendChild(generatedDOM);
+      // console.log('adding product: ', menuProduct);
     }
 
   }
