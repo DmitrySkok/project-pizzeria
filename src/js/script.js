@@ -141,58 +141,23 @@
       thisCart.update();
     }
 
-    getData() {
-      const thisCart = this;
-      const dataSummary = {};
-
-      dataSummary.id = thisCart.id;
-      dataSummary.name = thisCart.data.name;
-      dataSummary.amount = thisCart.amountWidget.value;
-      dataSummary.priceSingle = thisCart.priceSingle;
-      dataSummary.price = thisCart.data.price;
-      dataSummary.params = thisCart.prepareDataProductParams();
-      
-      console.log('dataSummary', dataSummary);
-      return dataSummary;
-    }
-
-    prepareDataProductParams(){
-      const thisCart = this;
-      const formData = utils.serializeFormToObject(thisCart.form);
-      const params = {};
-
-      for (let paramId in thisCart.data.params) {
-        const param = thisCart.data.params[paramId];
-        params[paramId] = {
-          label: param.label,
-          options: {}
-        };
-
-        for (let optionId in param.options) {
-          const option = param.options[optionId];
-
-          if (formData[paramId] && formData[paramId].includes(optionId)) {
-            params[paramId].options[optionId] = option.label;
-          }
-        }
-      }
-      return params;
-    }
-
     sendOrder() {
       const thisCart = this;
 
       const url = settings.db.url + '/' + settings.db.orders;
-      const payload = {};
+      const payload = {
+        phone: thisCart.dom.phone.value,
+        address: thisCart.dom.address.value,
+        totalPrice: thisCart.totalPrice,
+        subtotalPrice: thisCart.subtotalPrice,
+        totalNumber: thisCart.totalNumber,
+        deliveryFee: thisCart.deliveryFee,
+        products: []
+      };
       for(let prod of thisCart.products) {
+        console.log('prod: ', prod);
         payload.products.push(prod.getData());
       }
-
-      payload.address = thisCart.dom.address.value;
-      payload.phone = thisCart.dom.phone.value;
-      payload.totalPrice = thisCart.totalPrice;
-      payload.totalNumber = thisCart.totalNumber;
-      payload.subTotalPrice = thisCart.subTotalPrice;
 
       const options = {
         method: 'POST',
@@ -385,6 +350,19 @@
         thisCartProduct.remove();
         console.log('remove.addEventListener: ', thisCartProduct);
       });
+    }
+
+    getData() {
+      const thisCartProduct = this;
+      thisCartProduct.dataSummary = {
+        id: thisCartProduct.id,
+        name: thisCartProduct.name,
+        amount: thisCartProduct.amount,
+        priceSingle: thisCartProduct.priceSingle,
+        price: thisCartProduct.price,
+        params: thisCartProduct.params
+      };
+      return thisCartProduct.dataSummary;
     }
   }
 
