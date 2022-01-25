@@ -194,7 +194,7 @@
 
       for (const product of thisCart.products) {
         thisCart.totalNumber += product.amount;
-        thisCart.subtotalPrice = product.price * product.amount;
+        thisCart.subtotalPrice += product.price * product.amount;
       }
 
       if (thisCart.totalNumber == 0) {
