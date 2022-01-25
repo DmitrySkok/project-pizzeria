@@ -132,12 +132,12 @@
       });
     }
 
-    remove() {
+    remove(productToBeRemoved) {
       const thisCart = this;
-      thisCart.dom.productList.remove();
+      const indexProductToBeRemoved = thisCart.products.indexOf(productToBeRemoved);
 
-      thisCart.products.splice(0);
-      console.log('splice thisCart.products: ', thisCart.products);
+      thisCart.products.splice(indexProductToBeRemoved, 1);
+      productToBeRemoved.dom.wrapper.remove();
       thisCart.update();
     }
 
@@ -190,18 +190,18 @@
 
       thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
       thisCart.totalNumber = 0; //całościowa liczba sztuk
-      thisCart.subTotalPrice = 0; // zsumowana cena za wszystko
+      thisCart.subtotalPrice = 0; // zsumowana cena za wszystko
 
       for (const product of thisCart.products) {
         thisCart.totalNumber += product.amount;
-        thisCart.subTotalPrice += product.price;
+        thisCart.subtotalPrice = product.price * product.amount;
       }
 
       if (thisCart.totalNumber == 0) {
         thisCart.deliveryFee = 0;
         thisCart.totalPrice = 0;
       } else {
-        thisCart.totalPrice = thisCart.deliveryFee + thisCart.subTotalPrice;
+        thisCart.totalPrice = thisCart.deliveryFee + thisCart.subtotalPrice;
       }
       for (let price of thisCart.dom.totalPrice) { // but totalPrice its Array
         price.innerHTML = thisCart.totalPrice;
@@ -209,7 +209,7 @@
       console.log('totalPrice: ', thisCart.totalPrice);
       thisCart.dom.deliveryFee.innerHTML = thisCart.deliveryFee;
       thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
-      thisCart.dom.subtotalPrice.innerHTML = thisCart.subTotalPrice;
+      thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;
       thisCart.dom.totalPrice.innerHTML = thisCart.totalPrice;
     }
 
@@ -220,8 +220,8 @@
     constructor(element) {
       const thisWidget = this;
 
-      thisWidget.value = settings.amountWidget.defaultValue;
       thisWidget.getElements(element);
+      thisWidget.value = settings.amountWidget.defaultValue;
       thisWidget.setValue(thisWidget.input.value);
       thisWidget.initAction();
 
@@ -318,7 +318,7 @@
 
       thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
 
-      thisCartProduct.amountWidget.element.addEventListener('updated', function () {
+      thisCartProduct.dom.amountWidget.addEventListener('updated', function () {
         let price = thisCartProduct.price;
         price *= thisCartProduct.amountWidget.value;
         thisCartProduct.priceSingle = price;
