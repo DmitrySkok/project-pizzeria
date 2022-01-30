@@ -1,7 +1,7 @@
-import { settings, select, classNames } from './settings';
-import Product from './components/Product';
-import Cart from './components/Cart';
-import Booking from './components/Booking';
+import { settings, select, classNames } from './settings.js';
+import Product from './components/Product.js';
+import Cart from './components/Cart.js';
+import Booking from './components/Booking.js';
 
 const app = {
   initPages: function() {
@@ -20,8 +20,7 @@ const app = {
         break;
       }
     }
-
-    thisApp.activatePage(idFromHash);
+    thisApp.activatePage(pageMatchingHash);
 
     for(let link of thisApp.navLinks){
       link.addEventListener('click', function(event){
@@ -52,7 +51,7 @@ const app = {
       link.classList.toggle(
         classNames.nav.active, 
         link.getAttribute('href') == '#' + pageId
-        );
+      );
     }
   },
 
@@ -85,10 +84,10 @@ const app = {
   init: function () {
     const thisApp = this;
 
+    thisApp.initPages();
     thisApp.initData();
     thisApp.initCart();
     thisApp.initBooking();
-    thisApp.initPages();
   },
 
   initCart: function () {
