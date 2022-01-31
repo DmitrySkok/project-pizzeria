@@ -1,4 +1,4 @@
-import { select, classNames, settings, templates } from '../settings';
+import { select, classNames, settings, templates } from '../settings.js';
 import CartProduct from './CartProduct.js';
 import utils from '../utils.js';
 
@@ -73,7 +73,7 @@ class Cart {
       products: []
     };
     for(let prod of thisCart.products) {
-      console.log('prod: ', prod);
+      // console.log('prod: ', prod);
       payload.products.push(prod.getData());
     }
 
@@ -124,7 +124,7 @@ class Cart {
     for (let price of thisCart.dom.totalPrice) { // but totalPrice its Array
       price.innerHTML = thisCart.totalPrice;
     }
-    console.log('totalPrice: ', thisCart.totalPrice);
+    // console.log('totalPrice: ', thisCart.totalPrice);
     thisCart.dom.deliveryFee.innerHTML = thisCart.deliveryFee;
     thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
     thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;

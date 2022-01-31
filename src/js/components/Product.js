@@ -155,11 +155,11 @@ class Product {
     const event = new CustomEvent('add-to-cart', {
       bubbles: true,
       detail: {
-        product: thisProduct,
+        product: thisProduct.prepareCartProduct(),
       },
     });
 
-    thisProduct.element.dispatchElement(event);
+    thisProduct.element.dispatchEvent(event);
   }
 
   prepareCartProduct() {
