@@ -91,7 +91,7 @@ export const settings = {
   amountWidget: {
     defaultValue: 1,
     defaultMin: 0,
-    defaultMax: 10,
+    defaultMax: 9,
   },
   cart: {
     defaultDeliveryFee: 20,
