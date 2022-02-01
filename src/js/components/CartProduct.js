@@ -37,7 +37,7 @@ class CartProduct {
 
     thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
 
-    thisCartProduct.dom.amountWidget.addEventListener('updated', function () {
+    thisCartProduct.dom.amountWidget.addEventListener('updated', function() {
       let price = thisCartProduct.price;
       price *= thisCartProduct.amountWidget.value;
       thisCartProduct.priceSingle = price;
@@ -61,10 +61,10 @@ class CartProduct {
   initActions() {
     const thisCartProduct = this;
 
-    thisCartProduct.dom.edit.addEventListener('click', function (event) {
+    thisCartProduct.dom.edit.addEventListener('click', function(event) {
       event.preventDefault();
     });
-    thisCartProduct.dom.remove.addEventListener('click', function (event) {
+    thisCartProduct.dom.remove.addEventListener('click', function(event) {
       event.preventDefault();
       thisCartProduct.remove();
       // console.log('remove.addEventListener: ', thisCartProduct);

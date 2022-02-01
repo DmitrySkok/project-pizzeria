@@ -5,7 +5,7 @@ import HourPicker from './HourPicker.js';
 import utils from '../utils.js';
 
 class Booking {
-  constructor(element){
+  constructor(element) {
     const thisBooking = this;
 
     thisBooking.render(element);
@@ -13,7 +13,7 @@ class Booking {
     thisBooking.getData();
   }
 
-  getData(){
+  getData() {
     const thisBooking = this;
 
     const startDateParam = settings.db.dateStartParamKey + '=' + utils.dateToStr(thisBooking.datePicker.minDate);
@@ -39,11 +39,11 @@ class Booking {
     // console.log('parameters: ', params);
 
     const urls = {
-      bookings:      settings.db.url + '/' + settings.db.booking 
+      bookings:      settings.db.url + '/' + settings.db.bookings 
                                      + '?' + params.booking.join('&'),
-      eventsCurrent: settings.db.url + '/' + settings.db.event   
+      eventsCurrent: settings.db.url + '/' + settings.db.events   
                                      + '?' + params.eventsCurrent.join('&'),
-      eventsRepeat:  settings.db.url + '/' + settings.db.event   
+      eventsRepeat:  settings.db.url + '/' + settings.db.events   
                                      + '?' + params.eventsRepeat.join('&'),
     };
 
@@ -54,7 +54,7 @@ class Booking {
       fetch(urls.eventsCurrent),
       fetch(urls.eventsRepeat),
     ])
-      .then(function(allResponse){
+      .then(function(allResponse) {
         const bookingsResponse = allResponse[0];
         const eventsCurrentResponse = allResponse[1];
         const eventsRepeatResponse = allResponse[2];
@@ -64,14 +64,14 @@ class Booking {
           eventsRepeatResponse.json(),
         ]);
       })
-      .then(function([bookings, eventsCurrent, eventsRepeat ]){
+      .then(function([bookings, eventsCurrent, eventsRepeat ]) {
         console.log(bookings);
         console.log(eventsCurrent);
         console.log(eventsRepeat);
       });
   }
 
-  render(element){
+  render(element) {
     const thisBooking = this;
 
     const generatedHTML = templates.bookingWidget();
@@ -87,7 +87,7 @@ class Booking {
     
   }
 
-  initWidgets(){
+  initWidgets() {
     const thisBooking = this;
 
     thisBooking.peopleAmount = new AmountWidget(thisBooking.dom.peopleAmount);
@@ -95,10 +95,10 @@ class Booking {
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
 
-    thisBooking.dom.peopleAmount.addEventListener('click', function(){
+    thisBooking.dom.peopleAmount.addEventListener('click', function() {
       
     });
-    thisBooking.dom.hoursAmount.addEventListener('click', function(){
+    thisBooking.dom.hoursAmount.addEventListener('click', function() {
 
     });
   }

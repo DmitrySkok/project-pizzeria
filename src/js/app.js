@@ -14,16 +14,16 @@ const app = {
 
     let pageMatchingHash = thisApp.pages[0].id;
 
-    for(let page of thisApp.pages){
-      if(page.id == idFromHash){
+    for(let page of thisApp.pages) {
+      if(page.id == idFromHash) {
         pageMatchingHash = page.id;
         break;
       }
     }
     thisApp.activatePage(pageMatchingHash);
 
-    for(let link of thisApp.navLinks){
-      link.addEventListener('click', function(event){
+    for(let link of thisApp.navLinks) {
+      link.addEventListener('click', function(event) {
         const clickedElement = this;
         event.preventDefault();
 
@@ -43,11 +43,11 @@ const app = {
     const thisApp = this;
 
     /* add class 'active' to matching pages, remove from non-matching */
-    for (let page of thisApp.pages){
+    for (let page of thisApp.pages) {
       page.classList.toggle(classNames.pages.active, page.id == pageId);
     }
     /* add class 'active' to matching links, remove from non-matching */
-    for (let link of thisApp.navLinks){
+    for (let link of thisApp.navLinks) {
       link.classList.toggle(
         classNames.nav.active, 
         link.getAttribute('href') == '#' + pageId
@@ -55,7 +55,7 @@ const app = {
     }
   },
 
-  initMenu: function () {
+  initMenu: function() {
     const thisApp = this;
     // console.log('thisApp.data: ', thisApp.data);
     for (let productData in thisApp.data.products) {
@@ -64,24 +64,24 @@ const app = {
     }
   },
 
-  initData: function () {
+  initData: function() {
     const thisApp = this;
 
     // thisApp.data = dataSource;
     thisApp.data = {};
     const url = settings.db.url + '/' + settings.db.products;
     fetch(url)
-      .then(function (rawResponse) {
+      .then(function(rawResponse) {
         return rawResponse.json();
       })
-      .then(function (parsedResponse) {
+      .then(function(parsedResponse) {
         // console.log('parsedResponse: ', parsedResponse);
         thisApp.data.products = parsedResponse;
         thisApp.initMenu();
       });
   },
 
-  init: function () {
+  init: function() {
     const thisApp = this;
 
     thisApp.initPages();
@@ -90,14 +90,14 @@ const app = {
     thisApp.initBooking();
   },
 
-  initCart: function () {
+  initCart: function() {
     const thisApp = this;
 
     const cartElem = document.querySelector(select.containerOf.cart);
     thisApp.cart = new Cart(cartElem);
 
     thisApp.productList = document.querySelector(select.containerOf.menu);
-    thisApp.productList.addEventListener('add-to-cart', function(event){
+    thisApp.productList.addEventListener('add-to-cart', function(event) {
       app.cart.add(event.detail.product);
     });
   },

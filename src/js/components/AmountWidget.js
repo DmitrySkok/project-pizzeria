@@ -23,13 +23,13 @@ class AmountWidget extends BaseWidget {
     thisWidget.dom.linkIncrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkIncrease);
   }
 
-  isValid(value){
+  isValid(value) {
     return !isNaN(value) 
       && value >= settings.amountWidget.defaultMin 
       && value <= settings.amountWidget.defaultMax;
   }
 
-  renderValue(){
+  renderValue() {
     const thisWidget = this;
 
     thisWidget.dom.input.value = thisWidget.value;
@@ -39,16 +39,16 @@ class AmountWidget extends BaseWidget {
   initAction() {
     const thisWidget = this;
 
-    thisWidget.dom.input.addEventListener('change', function () {
+    thisWidget.dom.input.addEventListener('change', function() {
       thisWidget.value = thisWidget.dom.input.value;
     });
 
-    thisWidget.dom.linkDecrease.addEventListener('click', function (event) {
+    thisWidget.dom.linkDecrease.addEventListener('click', function(event) {
       event.preventDefault();
       thisWidget.setValue(thisWidget.value - 1);
     });
 
-    thisWidget.dom.linkIncrease.addEventListener('click', function (event) {
+    thisWidget.dom.linkIncrease.addEventListener('click', function(event) {
       event.preventDefault();
       thisWidget.setValue(thisWidget.value + 1);
     });
