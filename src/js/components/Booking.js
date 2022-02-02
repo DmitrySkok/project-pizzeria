@@ -8,9 +8,12 @@ class Booking {
   constructor(element) {
     const thisBooking = this;
 
+    thisBooking.selectedTable = [];
+
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
+    thisBooking.initActions();
   }
 
   getData() {
@@ -21,7 +24,7 @@ class Booking {
 
 
     const params = {
-      booking: [
+      bookings: [
         startDateParam,
         endDateParam,
       ],
@@ -40,7 +43,7 @@ class Booking {
 
     const urls = {
       bookings: settings.db.url + '/' + settings.db.bookings
-        + '?' + params.booking.join('&'),
+        + '?' + params.bookings.join('&'),
       eventsCurrent: settings.db.url + '/' + settings.db.events
         + '?' + params.eventsCurrent.join('&'),
       eventsRepeat: settings.db.url + '/' + settings.db.events
@@ -170,7 +173,11 @@ class Booking {
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
 
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
-
+    thisBooking.dom.floorPlan = thisBooking.dom.wrapper.querySelector(select.booking.floorPlan);
+    thisBooking.dom.orderConfirm = thisBooking.dom.wrapper.querySelector(select.booking.orderConfirm);
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
+    thisBooking.dom.starters = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
   }
 
   initWidgets() {
@@ -185,12 +192,84 @@ class Booking {
       thisBooking.updateDOM();
     });
 
-    thisBooking.dom.peopleAmount.addEventListener('click', function () {
+    thisBooking.dom.floorPlan.addEventListener('click', function (event) {
+      thisBooking.initTable(event.target);
+    });
+
+    /* thisBooking.dom.peopleAmount.addEventListener('click', function () {
 
     });
     thisBooking.dom.hoursAmount.addEventListener('click', function () {
 
+    }); */
+  }
+
+  initActions() {
+    const thisBooking = this;
+    thisBooking.dom.orderConfirm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      thisBooking.sendBooking();
+      console.log('order sended');
     });
+  }
+
+  sendBooking() {
+    const thisBooking = this;
+
+    const url = settings.db.url + '/' + settings.db.bookings;
+    const payload = {
+      date: thisBooking.date,
+      hour: thisBooking.hour,
+      table: parseInt(thisBooking.selectedTable),
+      duration: thisBooking.hoursAmount.correctValue,
+      ppl: thisBooking.peopleAmount.correctValue,
+      starters: [],
+      phone: thisBooking.dom.phone.value,
+      address: thisBooking.dom.address.value,
+    };
+
+    for (let starter of thisBooking.dom.starters) {
+      if (starter.checked) {
+        payload.starters.push(starter.value);
+      }
+    }
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+    fetch(url, options);
+    thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+  }
+
+  initTable(clickedElement) {
+    const thisBooking = this;
+
+    if (clickedElement.classList.contains('table')) {
+      const clickedElemAttr = clickedElement.getAttribute(settings.booking.tableIdAttribute);
+      if (clickedElement.classList.contains('booked')) {
+        alert('TABLE-' + clickedElemAttr + ' not available at this time');
+      } else if (!clickedElement.classList.contains('selected')) {
+        clickedElement.classList.add('selected');
+        thisBooking.selectedTable = clickedElemAttr;
+        console.log('selectedTable: ', thisBooking.selectedTable);
+      } else if (clickedElement.classList.contains('selected')) {
+        clickedElement.classList.remove('selected');
+        thisBooking.updateTables();
+        console.log('selectedTable: ', thisBooking.selectedTable);
+      }
+    }
+  }
+
+  updateTables() {
+    const thisBooking = this;
+    for (let table of thisBooking.dom.tables) {
+      table.classList.remove('selected');
+      thisBooking.selectedTable = null;
+    }
   }
 
 }
