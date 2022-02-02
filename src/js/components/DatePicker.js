@@ -24,11 +24,11 @@ class DatePicker extends BaseWidget {
         firstDayOfWeek: 1
       },
       disable: [
-        function(date) {
+        function (date) {
           return (date.getDay() === 1);
         }
       ],
-      onChange: function(selectedDates, dateStr) {
+      onChange: function (selectedDates, dateStr) {
         thisWidget.value = dateStr;
       },
     });

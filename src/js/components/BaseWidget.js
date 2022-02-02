@@ -10,7 +10,7 @@ class BaseWidget {
   }
 
   get value() {
-    const thisWidget= this;
+    const thisWidget = this;
 
     return thisWidget.correctValue;
   }
