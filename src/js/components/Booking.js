@@ -190,6 +190,7 @@ class Booking {
 
     thisBooking.dom.wrapper.addEventListener('update', function () {
       thisBooking.updateDOM();
+      thisBooking.updateTables();
     });
 
     thisBooking.dom.floorPlan.addEventListener('click', function (event) {
@@ -209,7 +210,7 @@ class Booking {
     thisBooking.dom.orderConfirm.addEventListener('submit', function (event) {
       event.preventDefault();
       thisBooking.sendBooking();
-      console.log('order sended');
+      alert('Booking sended');
     });
   }
 
@@ -218,8 +219,8 @@ class Booking {
 
     const url = settings.db.url + '/' + settings.db.bookings;
     const payload = {
-      date: thisBooking.date,
-      hour: thisBooking.hour,
+      date: thisBooking.datePicker.correctValue,
+      hour: thisBooking.hourPicker.correctValue,
       table: parseInt(thisBooking.selectedTable),
       duration: thisBooking.hoursAmount.correctValue,
       ppl: thisBooking.peopleAmount.correctValue,
