@@ -1,0 +1,276 @@
+#pages {
+  > * {
+    display: none;
+  }
+
+  > .active {
+    display: block;
+  }
+}
+
+.home-wrapper {
+  margin: ($base-size * 3.5) auto;
+  padding: ($base-size * 6) ($base-size * 4);
+  background: $color-light;
+  border-bottom: 1px solid lighten($color-dark, 70%);
+  border-radius: $radius;
+
+  section {
+    margin-bottom: 80px;
+  }
+
+  h2 {
+    font-family: "Oswald", sans-serif;
+    font-weight: $font-bold;
+    margin: 0;
+  }
+
+  h3 {
+    font-family: "Oswald", sans-serif;
+    margin: 0 0 5px 0;
+    font-size: 17px;
+  }
+
+  h4 {
+    font-size: 15px;
+    font-style: italic;
+    margin: 10px 0 0 0;
+  }
+
+  p {
+    margin: 0;
+    font-size: 12px;
+  }
+}
+
+/* links section */
+.links {
+  &-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    a[class^="link-"] {
+      flex: 0 0 49%;
+      height: 100px;
+      text-align: center;
+      border-radius: 5px;
+      margin-bottom: 2%;
+      color: $color-light;
+      position: relative;
+      cursor: pointer;
+
+      h2,
+      p {
+        position: absolute;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.4s;
+      }
+
+      h2 {
+        top: 50%;
+      }
+
+      p {
+        bottom: 0%;
+        transform: translate(-50%, 50%);
+        opacity: 0;
+      }
+
+      &:hover h2 {
+        top: 30%;
+      }
+
+      &:hover p {
+        opacity: 1;
+        bottom: 30%;
+      }
+    }
+
+    .link-order {
+      background: center url("../../images/home/pizza-1.jpg");
+      margin-right: 1%;
+    }
+
+    .link-book {
+      background: center url("../../images/home/pizza-2.jpg");
+      margin-left: 1%;
+    }
+
+    .opening-hours {
+      flex: 0 0 100%;
+      text-align: center;
+      background-color: $color-main;
+      border-radius: 5px;
+      color: $color-light;
+      height: 100px;
+      position: relative;
+      cursor: default;
+      text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+
+      h2,
+      p {
+        position: absolute;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.5s;
+      }
+
+      h2 {
+        top: 35%;
+      }
+
+      p {
+        top: 65%;
+      }
+    }
+  }
+}
+
+/* reviews section */
+.carousel-cell {
+  width: 100%;
+  height: 200px;
+  margin-right: 10px;
+  display: flex;
+
+  .review-img {
+    flex: 0 0 35%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 5px;
+    }
+  }
+
+  .review-text {
+    flex: 0 0 65%;
+    padding: 20px;
+  }
+}
+
+/* photos */
+.photos {
+  &-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .photo:nth-of-type(3n) {
+      padding-right: 0px;
+    }
+  }
+}
+
+.photo {
+  width: 33.33%;
+  height: 200px;
+  padding: 0 11px 11px 0;
+
+  &-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 5px;
+    }
+
+    &::before {
+      content: "";
+      height: 100%;
+      width: 100%;
+      background-color: black;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition-property: opacity;
+      transition-duration: 1s;
+    }
+
+    &:hover::before {
+      opacity: 0.5;
+    }
+  }
+
+  &-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    color: $color-light;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 1s;
+
+    i {
+      padding: 5px;
+      color: $color-light;
+      transition: color 1.2s, transform 0.3s;
+
+      &:hover {
+        color: $color-red;
+        transform: scale(1.3);
+      }
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+/* footer */
+.footer {
+  background-color: $color-light;
+  margin: 20px 0;
+  text-align: center;
+
+  ul {
+    padding: 0;
+    list-style-type: none;
+  }
+
+  ul {
+    li {
+      display: inline-block;
+      font-size: 0;
+      margin-left: 15px;
+      transition: all 1s;
+
+      &:hover {
+        transform: scale(1.1);
+        transition: all 1s;
+      }
+    }
+
+    i {
+      font-size: 27px;
+      background: $color-dark;
+      color: $color-light;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 50%;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+}
